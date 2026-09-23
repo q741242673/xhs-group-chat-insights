@@ -72,19 +72,19 @@ python3 skills/xhs-group-chat-insights/scripts/xhs_group_tool.py doctor
 
 抓取、话题提取与分析的参数说明见 `skills/xhs-group-chat-insights/references/`。
 
-## 两种使用模式
+## 使用方式
 
-### 只分析已有导出
+### 已有聊天记录：直接分析
 
-不需要登录，也不需要 Spider_XHS。把 ZIP 或完整的 `messages.json` 提供给 Codex，然后说：
+不需要登录，也不需要安装抓取环境。把 ZIP 或完整的 `messages.json` 提供给 Codex，然后说：
 
 ```text
 请使用 $xhs-group-chat-insights 分析这些群聊记录，告诉我各群平时讨论什么、成员真正关心什么，并标注数据范围与局限。
 ```
 
-### 抓取后再分析
+### 没有聊天记录：先连接小红书
 
-实时抓取依赖外部项目 [Spider_XHS](https://github.com/cv-cat/Spider_XHS)。Skill 已内置只读群聊扩展、安装器、环境检查和二维码登录流程。安装要求：Python 3.10+、Node.js 20+、Git。
+首次使用需要完成环境检查和二维码登录。Skill 已内置所需的只读群聊扩展和配置脚本；本机需要 Python 3.10+、Node.js 20+ 和 Git。
 
 ```bash
 python3 ~/.codex/skills/xhs-group-chat-insights/scripts/setup_capture.py --check
@@ -101,6 +101,8 @@ python3 ~/.codex/skills/xhs-group-chat-insights/scripts/xhs_group_tool.py doctor
 
 更完整的运行说明见 Skill 内的 `references/setup.md` 和 `references/capture.md`。
 
-## 许可与边界
+## 技术说明与使用边界
 
-本仓库中的 Skill 文件采用 MIT License。Spider_XHS 是独立的外部项目，没有随本仓库分发；其公开 README 当前说明“仅供学习交流、禁止商业化”。使用者须自行遵守该项目的最新说明、小红书平台规则以及适用法律。
+实时抓取底层使用外部项目 [Spider_XHS](https://github.com/cv-cat/Spider_XHS)。本仓库不包含该项目代码；初始化脚本会下载经过测试的固定版本。它有独立的使用声明和限制，请同时遵守其最新说明、小红书平台规则以及适用法律。
+
+本仓库中的 Skill、分析脚本和只读群聊扩展采用 MIT License。
