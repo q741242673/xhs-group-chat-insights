@@ -1,0 +1,38 @@
+# Secrets and local configuration
+.env
+.env.*
+*cookie*.txt
+*.cookie
+*login-qr*.png
+
+# Private or generated chat data
+exports/
+chat-exports/
+output/
+outputs/
+reports/
+data/
+*.zip
+messages.json
+messages.csv
+checkpoint.json
+normalized_messages.csv
+source_summary.json
+topic_table.csv
+participant_table.csv
+event_candidates.csv
+analysis_summary.json
+topics.json
+topics.csv
+topic_posts.json
+topic_posts.csv
+topic_messages/
+unreplied_topic_posts/
+
+# Local runtimes and caches
+.venv/
+node_modules/
+Spider_XHS/
+__pycache__/
+*.py[cod]
+.DS_Store

@@ -1,0 +1,4 @@
+interface:
+  display_name: "小红书群聊洞察"
+  short_description: "增量抓取小红书群聊记录、提取群话题并梳理成员长期关切与互动结构"
+  default_prompt: "使用 $xhs-group-chat-insights 抓取或更新我指定的小红书群聊，提取群话题，并分析大家平时在聊什么、关心什么。"
