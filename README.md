@@ -1,6 +1,8 @@
 # xhs-group-chat-insights
 
-一个面向 Codex 的只读 Skill：在用户授权范围内抓取或增量更新小红书群聊，离线提取群话题，并分析多个群平时讨论什么、成员关心什么、互动如何发生，以及哪些问题仍未闭环。
+一个只读的 Agent Skill 与 Python 工具集：在用户授权范围内抓取或增量更新小红书群聊，离线提取群话题，并分析多个群平时讨论什么、成员关心什么、互动如何发生，以及哪些问题仍未闭环。
+
+目前在 Codex 本地环境中完成了端到端验证；`SKILL.md` 采用 Agent Skills 目录结构，其他支持该规范且具备本地 Shell 能力的 Agent 也可以适配。分析脚本还可以脱离 Agent 单独运行。
 
 > 重要：群聊记录和 Cookie 都属于敏感数据。这个仓库只放 Skill 本身，绝不能提交真实 Cookie、原始群聊、成员名单或含私聊证据的分析报告。
 
@@ -24,23 +26,18 @@ skills/xhs-group-chat-insights/
 └── scripts/
 ```
 
-## 发布者：上传到 GitHub
+## 兼容范围
 
-先在 GitHub 新建一个空仓库，例如 `xhs-group-chat-insights`，不要勾选自动创建 README。然后在本目录执行：
+- **Codex 本地环境：** 推荐且已验证。支持自动发现 Skill、`$xhs-group-chat-insights` 调用、二维码登录、抓取和分析完整流程。
+- **其他 Agent Skills 客户端：** `SKILL.md`、引用文件和脚本可以复用，但安装位置、自动发现方式和工具权限由宿主决定，尚未逐一验证。
+- **ChatGPT / OpenAI API：** Skill 文件可作为工作流资源集成；离线分析最容易迁移。实时抓取依赖本地浏览器、Shell、二维码登录和持久化目录，需要部署方提供这些运行条件。
+- **不使用 Agent：** 可以直接运行仓库里的 Python 脚本完成环境检查、登录、抓取、话题提取和分析。
 
-```bash
-git init -b main
-git add .
-git commit -m "Initial public release"
-git remote add origin https://github.com/q741242673/xhs-group-chat-insights.git
-git push -u origin main
-```
+`agents/openai.yaml` 提供 OpenAI 产品中的展示信息，不影响核心 Python 脚本在其他环境运行。
 
-发布前请再次运行 `git status` 和 `git diff --cached --stat`，确认提交内容只有 Skill 文件和说明文档。
+## 在 Codex 中安装（已验证）
 
-## 使用者：安装 Skill
-
-### 方式一：Codex 自带安装脚本
+### 方式一：安装脚本
 
 通过本仓库安装：
 
@@ -52,7 +49,7 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 安装后新开一个 Codex 对话，再使用 `$xhs-group-chat-insights`。
 
-### 方式二：手动安装
+### 方式二：手动复制
 
 ```bash
 git clone https://github.com/q741242673/xhs-group-chat-insights.git
@@ -61,6 +58,19 @@ cp -R xhs-group-chat-insights/skills/xhs-group-chat-insights ~/.codex/skills/
 ```
 
 如果目标目录已存在，先人工确认是否需要升级；不要直接覆盖。
+
+## 不使用 Codex：直接运行脚本
+
+克隆仓库后，可以从仓库根目录执行：
+
+```bash
+python3 skills/xhs-group-chat-insights/scripts/setup_capture.py --check
+python3 skills/xhs-group-chat-insights/scripts/setup_capture.py
+python3 skills/xhs-group-chat-insights/scripts/xhs_group_tool.py login-qr
+python3 skills/xhs-group-chat-insights/scripts/xhs_group_tool.py doctor
+```
+
+抓取、话题提取与分析的参数说明见 `skills/xhs-group-chat-insights/references/`。
 
 ## 两种使用模式
 
