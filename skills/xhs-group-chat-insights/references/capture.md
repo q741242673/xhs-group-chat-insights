@@ -14,6 +14,16 @@ Environment variables or explicit CLI arguments can override both paths. If the 
 python3 <skill-dir>/scripts/xhs_group_tool.py doctor
 ```
 
+## Get the group input
+
+Ask the user to open the target group in the Xiaohongshu desktop website and copy the browser address. Accept either a full URL in this exact shape or the bare numeric group ID:
+
+```text
+https://www.xiaohongshu.com/chat/<group_id>
+```
+
+The user supplies this value after setup/login, either in their agent request or as `--chat-url` in the command below. Do not discover or enumerate other groups. Treat the group URL or ID as private task input; do not place it in public issues, commits, or reports.
+
 ## Full export
 
 ```bash

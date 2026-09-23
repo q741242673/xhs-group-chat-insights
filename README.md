@@ -74,6 +74,20 @@ python3 skills/xhs-group-chat-insights/scripts/xhs_group_tool.py doctor
 
 ## 使用方式
 
+### 群聊链接从哪里获取
+
+最稳定的方式是在电脑浏览器中获取：
+
+1. 登录小红书网页版并进入“消息”。
+2. 打开你有权访问的目标群聊。
+3. 复制浏览器地址栏中的完整网址，格式通常为：
+
+   ```text
+   https://www.xiaohongshu.com/chat/123456789012345678
+   ```
+
+工具也接受网址末尾的纯数字群 ID。群聊链接可能包含群标识，请只在自己的本地任务中使用，不要发到公开 Issue 或提交进仓库。
+
 ### 已有聊天记录：直接分析
 
 不需要登录，也不需要安装抓取环境。把 ZIP 或完整的 `messages.json` 提供给 Codex，然后说：
@@ -93,10 +107,22 @@ python3 ~/.codex/skills/xhs-group-chat-insights/scripts/xhs_group_tool.py login-
 python3 ~/.codex/skills/xhs-group-chat-insights/scripts/xhs_group_tool.py doctor
 ```
 
-第二条命令会下载依赖；第三条命令显示本地二维码，使用者需用自己的小红书 App 扫码确认。Cookie 只写入权限为 `600` 的本地配置文件，不会打印，也不得上传到 GitHub。配置完成后可说：
+第二条命令会下载依赖；第三条命令显示本地二维码，使用者需用自己的小红书 App 扫码确认。Cookie 只写入权限为 `600` 的本地配置文件，不会打印，也不得上传到 GitHub。
+
+群聊链接**不需要填进上面的安装或登录命令**。`doctor` 检查通过后，回到 Codex 对话，把刚才复制的链接放进请求里：
 
 ```text
-请使用 $xhs-group-chat-insights 更新这个小红书群聊并分析本周新话题：<群聊链接>
+请使用 $xhs-group-chat-insights 抓取并分析这个群聊：
+https://www.xiaohongshu.com/chat/123456789012345678
+```
+
+如果不使用 Codex，也可以在命令行直接输入：
+
+```bash
+python3 ~/.codex/skills/xhs-group-chat-insights/scripts/xhs_group_tool.py \
+  group-chat \
+  --chat-url 'https://www.xiaohongshu.com/chat/123456789012345678' \
+  --output-dir './chat-exports'
 ```
 
 更完整的运行说明见 Skill 内的 `references/setup.md` 和 `references/capture.md`。
